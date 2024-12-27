@@ -10,7 +10,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 option(BUILD_EXAMPLES "Build freetype-gl-cpp examples" ON)
 
-find_package(freetype REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW)
 find_package(Eigen3)
@@ -18,6 +17,8 @@ find_package(FontConfig)
 if(BUILD_EXAMPLES)
     find_package(glfw3 3.0)
 endif()
+
+set(FREETYPE_LIBRARY ${CMAKE_BINARY_DIR}/lib)
 
 function(make_includable input_file output_file)
     file(READ ${input_file} content)
@@ -58,9 +59,13 @@ set(HEADERS freetype-gl-cpp.h)
 set(SOURCES_FREETYPEGL_ADDITIONAL external/freetype-gl/demos/mat4.c)
 
 # Build freetype-gl-cpp
-include_directories(${FONTCONFIG_INCLUDE_DIR} external/ external/freetype-gl external/freetype-gl/demos)
+include_directories(${FONTCONFIG_INCLUDE_DIR} external/ external/freetype-gl external/freetype-gl/demos )
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${SOURCES_FREETYPEGL_ADDITIONAL})
-target_link_libraries(${PROJECT_NAME} PUBLIC freetype-gl PRIVATE ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARY})
+target_link_libraries(${PROJECT_NAME} PUBLIC freetype-gl PRIVATE ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARY} glfw libglew_static)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+    ${CMAKE_SOURCE_DIR}/dependencies/glfw/include
+    ${CMAKE_SOURCE_DIR}/dependencies/glew/include)
 
 # Install freetype-gl-cpp
 set(INCLUDE_INSTALL_DIR include/)
@@ -84,11 +89,3 @@ write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/ConfigVersion.cmake
                                  COMPATIBILITY SameMajorVersion)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake ${CMAKE_CURRENT_BINARY_DIR}/ConfigVersion.cmake
         DESTINATION ${CMAKECONFIG_INSTALL_DIR})
-
-# Build example
-if(BUILD_EXAMPLES)
-    project (freetype-gl-cpp-example)
-    include_directories(${GLFW3_LIBRARY_DIR} ${GLEW_INCLUDE_PATH})
-    add_executable(example example/example.cpp)
-    target_link_libraries(example freetype-gl-cpp ${OPENGL_gl_LIBRARY} ${GLFW3_LIBRARY} ${GLEW_LIBRARY})
-endif()
