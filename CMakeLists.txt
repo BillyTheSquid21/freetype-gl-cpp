@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 option(BUILD_EXAMPLES "Build freetype-gl-cpp examples" ON)
 
-find_package(Freetype REQUIRED)
+find_package(freetype REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW)
 find_package(Eigen3)
