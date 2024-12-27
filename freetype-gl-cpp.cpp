@@ -297,7 +297,7 @@ GLuint FreetypeGl::compileShader(const char* source, const GLenum type){
 }
 
 
-GLuint FreetypeGl::loadShader(char *frag, char *vert){
+GLuint FreetypeGl::loadShader(const char *frag, const char *vert){
     GLuint handle = glCreateProgram( );
     GLint link_status;
     if(strlen(vert)){

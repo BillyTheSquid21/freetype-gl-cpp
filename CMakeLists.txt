@@ -63,9 +63,11 @@ include_directories(${FONTCONFIG_INCLUDE_DIR} external/ external/freetype-gl ext
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${SOURCES_FREETYPEGL_ADDITIONAL})
 target_link_libraries(${PROJECT_NAME} PUBLIC freetype-gl PRIVATE ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARY} glfw libglew_static freetype)
 
+# Added for compatibility with wimp-renderer
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_SOURCE_DIR}/dependencies/glfw/include
-    ${CMAKE_SOURCE_DIR}/dependencies/glew/include)
+    ${CMAKE_SOURCE_DIR}/dependencies/glew/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external)
 
 # Install freetype-gl-cpp
 set(INCLUDE_INSTALL_DIR include/)
