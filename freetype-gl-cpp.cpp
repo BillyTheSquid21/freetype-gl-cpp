@@ -69,6 +69,7 @@ Markup& Markup::operator =(Markup &&other){
     other.description.font = NULL;
     other.description.family = NULL;
     other.manager = NULL;
+    return *this;
 }
 
 Markup::~Markup(){
@@ -150,7 +151,7 @@ void FreetypeGl::init(){
     updateTexture();
 
     mat4_set_identity(&view);
-    mat4_set_orthographic(&projection, -500, 500, -500, 500, -std::numeric_limits<float>::min(), std::numeric_limits<float>::max()); // If user forgets to provide matrix, this should be easier to debug than identity (it is more likely that something is visible)
+    mat4_set_orthographic(&projection, -500, 500, -500, 500, -(std::numeric_limits<float>::min)(), (std::numeric_limits<float>::max)()); // If user forgets to provide matrix, this should be easier to debug than identity (it is more likely that something is visible)
 }
 
 Markup FreetypeGl::createMarkup(const std::string& font_family,

@@ -61,7 +61,7 @@ set(SOURCES_FREETYPEGL_ADDITIONAL external/freetype-gl/demos/mat4.c)
 # Build freetype-gl-cpp
 include_directories(${FONTCONFIG_INCLUDE_DIR} external/ external/freetype-gl external/freetype-gl/demos )
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${SOURCES_FREETYPEGL_ADDITIONAL})
-target_link_libraries(${PROJECT_NAME} PUBLIC freetype-gl PRIVATE ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARY} glfw libglew_static)
+target_link_libraries(${PROJECT_NAME} PUBLIC freetype-gl PRIVATE ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARY} glfw libglew_static freetype)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_SOURCE_DIR}/dependencies/glfw/include
